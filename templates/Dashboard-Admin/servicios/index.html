@@ -1,0 +1,65 @@
+{% include 'Dashboard-Admin/layout.html' %}
+
+        <main>
+            <!-- End of Analyses -->
+
+            <!-- New Users Section -->
+            
+            <br><br>
+            <h2>Nuevo servicio</h2><br>
+            <h2><a href="{{ url_for('empleados.create') }}"><span class="danger">Crear servicio</span></a></h2>
+
+            {% for servicio in servicios %}
+            
+
+            <div class="new-users">
+                
+                
+                <div class="user-list">
+
+                    <div class="user">
+                        <h2>{{servicio[0] }}</h2>
+                    </div>
+
+                    <div class="user">
+                        <img class="img-thumbnail" width="100" src="{{ url_for('servicios.uploads', nombreFoto=servicio[3]) }}" alt="">
+                    </div>
+                    <div class="user">
+                        <div class="user">
+                            <h2>{{servicio[1] }}</h2>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <div class="user">
+                            <h2>{{servicio[2] }}</h2>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <h2>
+                        <a href="{{ url_for('servicios.edit', Serv_ID=servicio[0]) }}"><span class="danger">editar</span></a>
+                        </h2>
+                    </div>
+                    <div class="user">
+                        <h2>
+                        <a href="{{ url_for('servicios.destroy', Serv_ID=servicio[0]) }}"><span class="danger">Eliminar</span></a>   
+                        </h2>                 
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- End of New Users Section -->
+
+            <!-- Recent Orders Table -->
+            
+            <!-- End of Recent Orders -->
+
+        </main>
+        <!-- End of Main Content -->
+
+    </div>
+
+    <script src="../static/js/orders.js"></script>
+    <script src="../static/js/index.js"></script>
+
+    
+</tbody>
