@@ -1,4 +1,4 @@
-{% include 'Dashboard-Admin/layout.html' %}
+{% include 'Dashboard-Empleado/layout.html' %}
 
         <!-- Main Content -->
         <main>
@@ -10,50 +10,42 @@
             <br><br>
             <h2>formulario para editar</h2>
 
-
-            {% for administrador in administrador%}
+                    {% for administrador in administrador%}
             
             
 
-            <form  action="{{ url_for('administrador.update') }}" method="post" enctype="multipart/form-data">
-                <input type="text"value="{{ administrador[0] }}" name="AdID" id="AdID">
-            <div class="data"> 
-            <br>
-            <h2>Nombre:</h2><br>
-            <input type="text" value="{{ administrador[3] }}" name="AdNombre" id="AdNombre">
-            <br>
-            <h2>Correo:</h2><br>
-            <input type="text" value="{{ administrador[2] }}" name="AdCorreo" id="AdCorreo">
-            <br>
-            <h2>Foto:</h2>
-            <br>
-            </div>
-            <div class="img-edit">
-            <img class="img-thumbnail" width="100" src="{{ url_for('administrador.uploads', nombreFoto=administrador[3]) }}" alt="">
-            </div> 
-
-            <br>
-            <input type="file" name="AdFoto" id="AdFoto"> 
-            
-            <br>
-            <br><br>
-            <input type="submit"  value="Actualizar">
-            <br>
-
-
-
-            </form>
-
-            {% endfor %}
-            
-            <!-- End of New Users Section -->
-
-            <!-- Recent Orders Table -->
-            
-            <!-- End of Recent Orders -->
+                    <form  action="{{ url_for('administrador.update') }}" method="post" enctype="multipart/form-data">
+                        <h2>Id: {{ administrador[0] }}</h2>
+                    <div class="data"> <br>
+                    <br>
+                    <h2>Nombre:</h2>
+                    <input type="text" value="{{ administrador[3] }}" name="AdNombre" id="AdNombre">
+                    <br>
+                    <h2>Correo:</h2><br>
+                    <input type="text" value="{{ administrador[2] }}" name="AdCorreo" id="AdCorreo">
+                    <br>
+                    <h2>Foto:</h2>
+                    <br>
+                    </div>
+                    <div class="img-edit">
+                    <img class="img-thumbnail" width="100" src="{{ url_for('administrador.uploads', nombreFoto=administrador[3]) }}" alt="">
+                    </div> 
+        
+                    <br>
+                    <input type="file" name="AdFoto" id="AdFoto"> 
+                    
+                    <br>
+                    <br><br>
+                    <input type="submit"  value="Actualizar">
+                    <br>
+        
+                    </form>
+        
+                    {% endfor %}
+                </main>
+              </body>
 
         </main>
-        <!-- End of Main Content -->
 
     </div>
 

@@ -48,7 +48,7 @@ def index():
     servicios = cursor.fetchall()
     conn.commit()
 
-    return render_template('/index.html', servicios=servicios)
+    return render_template('Dashboard-Admin/servicios/index.html', servicios=servicios)
 
 @servicios_blueprint.route('/destroy/<int:Serv_ID>')
 def destroy(Serv_ID):

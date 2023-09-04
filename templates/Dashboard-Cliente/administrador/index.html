@@ -1,0 +1,73 @@
+{% include '/Dashboard-Admin/layout.html' %}
+
+        <!-- Main Content -->
+        <main>
+            
+            <!-- End of Analyses -->
+
+            <!-- New Users Section -->
+            
+            <h2>Nuevo administrador</h2><br>
+            <h2><a href="{{ url_for('administrador.create') }}"><span class="danger">Crear Cliente</span></a></h2>
+            
+
+            {% for administradores in administrador %}
+            
+
+            <div class="new-users">
+                
+                
+                <div class="user-list">
+
+                    <div class="user">
+                        <h2>{{administradores[0] }}</h2>
+                    </div>
+
+                    <div class="user">
+                        <img class="img-thumbnail" width="100" src="{{ url_for('administrador.uploads', nombreFoto=administradores[3]) }}" alt="">                    
+                    </div>
+                    <div class="user">
+                        <div class="user">
+                            <h2>{{administradores[1] }}</h2>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <div class="user">
+                            <h2>{{administradores[2] }}</h2>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <h2>
+                            <a href="{{ url_for('administrador.edit', Admin_Id=administradores[0]) }}"><span class="danger">Editar</span></a>                        
+                        </h2>
+                    </div>
+                    <div class="user">
+                        <h2>
+                            <a href="{{ url_for('administrador.destroy', Admin_Id=administradores[0]) }}"><span class="danger">Eliminar</span></a>                        
+                        </h2>                 
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- End of New Users Section -->
+
+            <!-- Recent Orders Table -->
+            
+            <!-- End of Recent Orders -->
+
+        </main>
+        <!-- End of Main Content -->
+
+
+        </div>
+
+
+    </div>
+
+    <script src="../static/js/orders.js"></script>
+    <script src="../static/js/index.js"></script>
+
+    {% include 'Dashboard-Admin/footer.html' %}
+
+    
+</tbody>

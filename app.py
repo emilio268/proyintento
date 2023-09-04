@@ -71,10 +71,20 @@ def mostrar_dashboardemple():
 
     return render_template('/Dashboard-Admin/clientes/index.html')
 
+@app.route('/dashboard-clie-create')
+def mostrar_dashboardemplecreate():
+
+    return render_template('/Dashboard-Admin/clientes/create.html')
+
 @app.route('/dashboard-emp')
 def mostrar_dashboardemp():
 
-    return render_template('/Dashboard-Admin/empleados/index.html')
+    return render_template('/Dashboard-Empleado/index.html')
+
+@app.route('/dashboard-cli')
+def mostrar_dashboardcli():
+
+    return render_template('/Dashboard-Cliente/Clie-Dashboard.html')
 
 @app.route('/dashboard-emp-create')
 def mostrar_dashboardempcreate():
@@ -140,15 +150,17 @@ def login():
                 return render_template("/Dashboard-Admin/admin_Dashboard.html", cantidad_usuarios=cantidad_usuarios,
                                        cantidad_empleados=cantidad_empleados, cantidad_clientes=cantidad_clientes,
                                        cantidad_proyectos=cantidad_proyectos)
-            elif session['Usua_Rol'] == 2:
-                return render_template("/Dashboard-Admin/admin_Dashboard.html", cantidad_usuarios=cantidad_usuarios,
-                                       cantidad_empleados=cantidad_empleados, cantidad_clientes=cantidad_clientes,
-                                       cantidad_proyectos=cantidad_proyectos)
+            elif session['Usua_Rol'] == 2 :
+                return render_template("/Dashboard-Empleado/Emple-Dashboard.html")
+            elif session['Usua_Rol'] == 3 :
+                return render_template("/Dashboard-Cliente/clie-Dashboard.html")
+            elif session['Usua_Rol'] == 4 :
+                return render_template("/Dashboard-Empleado/Emple-Dashboard.html")
         else:
             return render_template('index.html', mensaje="Usuario O Contraseña Incorrectas")
 
     # Resto de la vista si no hay solicitud POST
-    return render_template('/Dashboard-Admin/admin_Dashboard.html', cantidad_usuarios=cantidad_usuarios,
+    return render_template('/Dashboard-Empleado/Emple-Dashboard.html', cantidad_usuarios=cantidad_usuarios,
                            cantidad_empleados=cantidad_empleados, cantidad_clientes=cantidad_clientes,
                            cantidad_proyectos=cantidad_proyectos)
   
@@ -177,7 +189,7 @@ def registro():
             cur.close()
 
             flash('Registro exitoso', 'success')
-            return redirect(url_for('login'))
+            return redirect(url_for('/login'))
         except Exception as e:
             # Manejar cualquier excepción que pueda ocurrir durante la inserción
             flash(f'Error: {str(e)}', 'danger')

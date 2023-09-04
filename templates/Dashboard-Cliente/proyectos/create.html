@@ -1,0 +1,52 @@
+{% include '/Dashboard-Admin/layout.html' %}
+        <!-- Main Content -->
+        <main>
+            
+            
+            <!-- End of Analyses -->
+
+            <!-- New Users Section -->
+            
+            <br><br>
+            <h2>Nuevo Proyecto</h2>
+            <h2><a href="{{ url_for('proyectos.create') }}"><span class="danger">Crear proyecto</span></a></h2>
+
+            <br>
+
+            <form action="{{ url_for('proyectos.storage') }}" method="post" enctype="multipart/form-data">
+                <div class="data"> 
+                <h2>Nombre:</h2><br>
+                <input type="text" name="PNombre" required><br>
+            
+                <br>
+
+                <h2>Correo:</h2><br>
+                <input type="email" name="PCorreo" required><br><br>
+            
+                <h2>Foto:</h2><br>
+
+            </div>
+            <div class="picture"> 
+                <input type="file" name="PFoto" accept=".jpg, .png, .jpeg" required><br><br>
+            </div>
+                
+                <button type="submit">Crear proyecto</button>
+            </form>
+            
+            <!-- End of New Users Section -->
+
+            <!-- Recent Orders Table -->
+            
+            <!-- End of Recent Orders -->
+
+        </main>
+        <!-- End of Main Content -->
+
+    </div>
+
+    <script src="../static/js/orders.js"></script>
+    <script src="../static/js/index.js"></script>
+
+
+    
+</tbody>
