@@ -13,9 +13,8 @@
                     <h2>{{ cantidad_empleados }}</h2>
                     <p>Empleados</p>
                 </div>
-                <i class='bx bx-trending-up icon' ></i>
+                <i class='bx bx-trending-up icon'></i>
             </div>
-          
         </div>
         <div class="card">
             <div class="head">
@@ -23,9 +22,8 @@
                     <h2>{{ cantidad_clientes }}</h2>
                     <p>Clientes</p>
                 </div>
-                <i class='bx bx-trending-down icon down' ></i>
+                <i class='bx bx-trending-down icon down'></i>
             </div>
-           
         </div>
         <div class="card">
             <div class="head">
@@ -33,9 +31,8 @@
                     <h2>{{ cantidad_proyectos }}</h2>
                     <p>Proyectos</p>
                 </div>
-                <i class='bx bx-trending-up icon' ></i>
+                <i class='bx bx-trending-up icon'></i>
             </div>
-            
         </div>
         <div class="card">
             <div class="head">
@@ -43,30 +40,30 @@
                     <h2>{{ cantidad_usuarios }}</h2>
                     <p>Usuarios Totales</p>
                 </div>
-                <i class='bx bx-trending-up icon' ></i>
+                <i class='bx bx-trending-up icon'></i>
             </div>
-           
         </div>
     </div>
-    <!-- End of New Users Section -->
 
     <!-- Recent Orders Table -->
     <!-- End of Recent Orders -->
 
+    {% if session['es_nuevo_usuario'] and session['login_count'] <= 3 %}
+    <div class="message">
+        <p>Bienvenido, eres un nuevo usuario.</p>
+    </div>
+    {% else %}
+    <div class="message">
+        <p>Bienvenido de nuevo, usuario existente.</p>
+    </div>
+    {% endif %}
+
 </main>
 <!-- End of Main Content -->
-
-
 </div>
-
 </div>
-
-
-
 <script src="../static/js/orders.js"></script>
 <script src="../static/js/index.js"></script>
-
-
 
 </body>
 

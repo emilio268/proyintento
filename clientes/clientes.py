@@ -12,7 +12,6 @@ import os
 
 app=Flask(__name__)
 
-
 mysql= MySQL()
 
 clientes_blueprint = Blueprint('clientes', __name__)
@@ -31,7 +30,6 @@ def on_load(state):
     global CARPETA
     CARPETA = os.path.join('uploads')
     state.app.config['CARPETA'] = CARPETA
-
 
 @clientes_blueprint.route('/uploads/<nombreFoto>')
 def uploads(nombreFoto):
