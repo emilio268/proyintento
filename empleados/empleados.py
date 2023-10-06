@@ -62,6 +62,8 @@ def destroy(Emp_Id):
     conn.commit()
     return redirect('/empleados/vista')
 
+# ...
+
 @empleados_blueprint.route('/edit/<int:Emp_Id>')
 def edit(Emp_Id):
     conn = mysql.connect()
@@ -76,11 +78,17 @@ def edit(Emp_Id):
 def update():
     _Emp_Nombre = request.form['ENombre']
     _Emp_Correo = request.form['ECorreo']
+    _Emp_Telefono = request.form['ETelefono']  # Nuevo campo
+    _Emp_Direccion = request.form['EDireccion']  # Nuevo campo
     _Emp_Foto = request.files['EFoto']
     _Emp_Id = request.form['EID']
 
-    sql = "UPDATE `empleados` SET Emp_Nombre=%s, Emp_Correo=%s WHERE Emp_Id=%s;"
-    datos = (_Emp_Nombre, _Emp_Correo, _Emp_Id)
+    # Actualiza la sentencia SQL para incluir los nuevos campos
+    sql = "UPDATE `empleados` SET Emp_Nombre=%s, Emp_Correo=%s, Emp_Telefono=%s, Emp_Direccion=%s WHERE Emp_Id=%s;"
+    datos = (_Emp_Nombre, _Emp_Correo, _Emp_Telefono, _Emp_Direccion, _Emp_Id)
+
+    # Resto del código sin cambios...
+
 
     conn = mysql.connect()
     cursor = conn.cursor()

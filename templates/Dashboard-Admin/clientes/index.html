@@ -1,10 +1,9 @@
 {% include '/Dashboard-Admin/layout.html' %}
 <main>  
-       
     <div class="btn-crt">
         <h2><i class='bx bx-user'></i>
-            <a href="{{ url_for('empleados.create') }}"><span>Crear Empleado</span></a></h2>
-    </div>
+            <a href="{{ url_for('clientes.create') }}"><span>Crear Cliente</span></a></h2>
+    </div><br><br>
     <table id="basic-data-table" class="table-asd" style="width:100%">
         <thead>
           <tr>
@@ -12,38 +11,28 @@
             <th>Foto</th>
             <th>Nombre</th>
             <th>Correo</th>
+            <th>Telefono</th>
+            <th>Direccion</th>
             <th>Acciones</th>
           </tr>
         </thead>
-
-    {% for cliente in clientes %}
-
-            <tbody>
+        <tbody>
+            {% for cliente in clientes %}
                 <tr>
-                  <td>{{cliente[0] }}</td>
-                  <td><img class="img-thumbnail" width="100" src="{{ url_for('clientes.uploads', nombreFoto=cliente[3]) }}" alt=""></td>
-                  <td>{{cliente[1] }}</td>
-                  <td>{{cliente[2] }}</td>
-                  <td><a href="{{ url_for('clientes.edit', Clie_Id=cliente[0]) }}"><span class="danger">editar</span></a></td>
-                  <td><a href="{{ url_for('clientes.destroy', Clie_Id=cliente[0]) }}"><span class="danger">Eliminar</span></a></td>
+                    <td>{{ cliente[0] }}</td>
+                    <td>
+                    </td>
+                    <td>{{ cliente[1] }}</td>
+                    <td>{{ cliente[2] }}</td>
+                    <td>{{ cliente[5] }}</td>
+                    <td>{{ cliente[6] }}</td>
+                    <td>
+                        <a href="{{ url_for('clientes.edit', Clie_Id=cliente[0]) }}"><span class="danger">Editar</span></a>
+                        <a href="{{ url_for('clientes.destroy', Clie_Id=cliente[0]) }}"><span class="danger">Eliminar</span></a>
+                    </td>
                 </tr>
-    
-    {% endfor %}
-
+            {% endfor %}
+        </tbody>
+    </table>
 </main>
-        </main>
-        <!-- End of Main Content -->
-
-
-        </div>
-
-
-    </div>
-
-    <script src="../static/js/orders.js"></script>
-    <script src="../static/js/index.js"></script>
-
-    {% include 'Dashboard-Admin/footer.html' %}
-
-    
-</tbody>
+{% include 'Dashboard-Admin/footer.html' %}

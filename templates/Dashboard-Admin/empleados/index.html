@@ -1,11 +1,9 @@
-{% include 'Dashboard-Admin/layout.html' %}
-
+{% include '/Dashboard-Admin/layout.html' %}
 <main>  
-       
     <div class="btn-crt">
         <h2><i class='bx bx-user'></i>
             <a href="{{ url_for('empleados.create') }}"><span>Crear Empleado</span></a></h2>
-    </div>
+    </div><br><br>
     <table id="basic-data-table" class="table-asd" style="width:100%">
         <thead>
           <tr>
@@ -16,29 +14,20 @@
             <th>Acciones</th>
           </tr>
         </thead>
-
-    {% for empleado in empleados %}
-
-            <tbody>
+        <tbody>
+            {% for empleado in empleados %}
                 <tr>
-                  <td>{{empleado[0] }}</td>
-                  <td><img class="img-thumbnail" width="100" src="{{ url_for('empleados.uploads', nombreFoto=empleado[3]) }}" alt=""></td>
-                  <td>{{empleado[1] }}</td>
-                  <td>{{empleado[2] }}</td>
-                  <td><a href="{{ url_for('empleados.edit', Emp_Id=empleado[0]) }}"><span class="danger">editar</span></a></td>
+                  <td>{{ empleado[0] }}</td>
+                  <td>
+                    <img src="{{ url_for('empleados.uploads', nombreFoto=empleado[3]) }}" alt="{{ empleado['Emp_Foto'] }}">
+                  </td>
+                  <td>{{ empleado[1] }}</td>
+                  <td>{{ empleado[2] }}</td>
+                  <td><a href="{{ url_for('empleados.edit', Emp_Id=empleado[0]) }}"><span class="danger">Editar</span></a></td>
                   <td><a href="{{ url_for('empleados.destroy', Emp_Id=empleado[0]) }}"><span class="danger">Eliminar</span></a></td>
                 </tr>
-    
-    {% endfor %}
-
+            {% endfor %}
+        </tbody>
+    </table>
 </main>
-        <!-- End of Main Content -->
-
-    <script src="../static/js/orders.js"></script>
-    <script src="../static/js/index.js"></script>
-
-    {% include 'Dashboard-Admin/footer.html' %}
-
-    
-</tbody>
-</table>
+<script src="../static/js/orders.js"></script>

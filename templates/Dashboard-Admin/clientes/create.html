@@ -1,56 +1,27 @@
 {% include '/Dashboard-Admin/layout.html' %}
-
-        <!-- Main Content -->
-        <main>
-            
-            
-            <!-- End of Analyses -->
-
-            <!-- New Users Section -->
-            
-            <br><br>
-            <h2>New Cliente</h2>
-            <h2><a href="{{ url_for('empleados.create') }}"><span class="danger">Crear Empleado</span></a></h2>
-
+<main>
+    <br><br>
+    <h2>Nuevo Cliente</h2>
+    <br>
+    <form action="{{ url_for('clientes.storage') }}" method="post" enctype="multipart/form-data">
+        <div class="data"> 
+            <h2>Nombre:</h2><br>
+            <input type="text" name="CNombre" required><br>
+            <h2>Correo:</h2><br>
+            <input type="email" name="CCorreo" required><br>
+            <h2>Teléfono:</h2><br>
+            <input type="text" name="CTelefono"><br>
+            <h2>Dirección:</h2><br>
+            <input type="text" name="CDireccion"><br>
             <br>
-
-            <form action="{{ url_for('clientes.storage') }}" method="post" enctype="multipart/form-data">
-                <div class="data"> 
-                <h2>Nombre:</h2><br>
-                <input type="text" name="CNombre" required><br>
-            
-                <h2>Correo:</h2><br>
-                <input type="email" name="CCorreo" required><br>
-            
-                <h2>Foto:</h2><br>
-            </div>
-            <div class="picture"> 
-                <input type="file" name="CFoto" accept=".jpg, .png, .jpeg" required><br><br>
-            </div>            
-                <button type="submit">Crear Cliente</button>
-            </form>
-            
-            <!-- End of New Users Section -->
-
-            <!-- Recent Orders Table -->
-            
-            <!-- End of Recent Orders -->
-
-        </main>
-        <!-- End of Main Content -->
-
-        <!-- Right Section -->
-
-        
-
+            <h2>Foto:</h2><br>
         </div>
-
-
-    </div>
-
-    <script src="../static/js/orders.js"></script>
-    <script src="../static/js/index.js"></script>
-
-
-    
-</tbody>
+        <div class="picture"> 
+            <input type="file" name="CFoto" accept=".jpg, .png, .jpeg" required><br><br>
+        </div>            
+        <button type="submit">Crear Cliente</button>
+    </form>
+</main>
+<script src="../static/js/orders.js"></script>
+<script src="../static/js/index.js"></script>
+{% include 'Dashboard-Admin/footer.html' %}

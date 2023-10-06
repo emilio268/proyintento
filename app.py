@@ -66,10 +66,10 @@ def mostrar_dashboardproycreate():
 @app.route('/dashboard-admin')
 def mostrar_dashboardadmin():
     # Realiza consultas para obtener las cantidades utilizando SQLAlchemy
-    cantidad_empleados = db.session.query(db.func.count()).select_from(db.table('empleados')).scalar()
     cantidad_clientes = db.session.query(db.func.count()).select_from(db.table('clientes')).scalar()
+    cantidad_empleados = db.session.query(db.func.count()).select_from(db.table('empleados')).scalar()
     cantidad_proyectos = db.session.query(db.func.count()).select_from(db.table('proyectos')).scalar()
-    cantidad_usuarios = db.session.query(db.func.count()).select_from(db.table('usuarios')).scalar()
+    cantidad_usuarios = cantidad_clientes + cantidad_empleados  # Calcula la cantidad total de usuarios
 
     # Establece estas cantidades en la sesión para usarlas en la plantilla HTML
     session['cantidad_empleados'] = cantidad_empleados
@@ -78,7 +78,7 @@ def mostrar_dashboardadmin():
     session['cantidad_usuarios'] = cantidad_usuarios
 
     return render_template('/Dashboard-Admin/admin_Dashboard.html', cantidad_empleados=cantidad_empleados, cantidad_clientes=cantidad_clientes, cantidad_proyectos=cantidad_proyectos, cantidad_usuarios=cantidad_usuarios)
-
+ 
 @app.route('/dashboard-clie')
 def mostrar_dashboardclie():
 

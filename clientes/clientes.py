@@ -74,11 +74,15 @@ def edit(Clie_Id):
 def update():
     _Clie_Nombre = request.form['CNombre']
     _Clie_Correo = request.form['CCorreo']
+    _Clie_Telefono = request.form['CTelefono']  # Nuevo campo
+    _Clie_Direccion = request.form['CDireccion']  # Nuevo campo
     _Clie_Foto = request.files['CFoto']
     _Clie_Id = request.form['CID']
 
-    sql = "UPDATE `clientes` SET Clie_Nombre=%s, Clie_Correo=%s WHERE Clie_Id=%s;"
-    datos = (_Clie_Nombre, _Clie_Correo, _Clie_Id)
+    # Actualiza la sentencia SQL para incluir los nuevos campos
+    sql = "UPDATE `clientes` SET Clie_Nombre=%s, Clie_Correo=%s, Clie_Telefono=%s, Clie_Direccion=%s WHERE Clie_Id=%s;"
+    datos = (_Clie_Nombre, _Clie_Correo, _Clie_Telefono, _Clie_Direccion, _Clie_Id)
+
 
     conn = mysql.connect()
     cursor = conn.cursor()

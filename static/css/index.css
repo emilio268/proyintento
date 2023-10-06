@@ -609,7 +609,8 @@ main .btn-send:hover {
 /* CONTENT */
 
 .data input{
-    width: 50%;
+    position: relative;
+    width: 20%;
     height: 5%;
     border: #bdb4b7 solid 1px;
     padding: 10px;
@@ -1261,7 +1262,5 @@ main .recent-orders a{
 
 table {
     width: 100%;
-    border: 1px solid #000;
  }
-
 
