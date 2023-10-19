@@ -1,9 +1,7 @@
 {% include '/Dashboard-Admin/layout.html' %}
 <main>  
-    <div class="btn-crt">
-        <h2><i class='bx bx-user'></i>
-            <a href="{{ url_for('clientes.create') }}"><span>Crear Cliente</span></a></h2>
-    </div><br><br>
+        <h2>Lista de <span style="color: brown;"> Clientes</span></h2><br>
+  
     <table id="basic-data-table" class="table-asd" style="width:100%">
         <thead>
           <tr>
@@ -27,7 +25,6 @@
                     <td>{{ cliente[5] }}</td>
                     <td>{{ cliente[6] }}</td>
                     <td>
-                        <a href="{{ url_for('clientes.edit', Clie_Id=cliente[0]) }}"><span class="danger">Editar</span></a>
                         <a href="{{ url_for('clientes.destroy', Clie_Id=cliente[0]) }}"><span class="danger">Eliminar</span></a>
                     </td>
                 </tr>

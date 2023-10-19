@@ -6,6 +6,7 @@
     <form action="{{ url_for('empleados.update') }}" method="post" enctype="multipart/form-data">
         <input type="text" value="{{ empleado['Emp_Id'] }}" name="EID" id="EID">
         <div class="data"> 
+            
             <br>
             <h2>Nombre:</h2><br>
             <input type="text" value="{{ empleado['Emp_Nombre'] }}" name="ENombre" id="ENombre">
