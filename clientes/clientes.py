@@ -35,17 +35,53 @@ def on_load(state):
 def uploads(nombreFoto):
     carpeta = current_app.config['CARPETA']
     return send_from_directory(current_app.config['CARPETA'], nombreFoto)
-
-@clientes_blueprint.route('/vista')
+@clientes_blueprint.route('/vista', methods=['GET', 'POST'])
 def index():
-    sql = "SELECT * FROM clientes;"
+    if request.method == 'POST':
+        rol = request.form.get('rol')
+    else:
+        rol = request.args.get('rol', 'todos')
+
+    singular_to_plural = {
+        'cliente': 'clientes',
+        'empleado': 'empleados',
+        'administrador': 'administrador'
+    }
+
+    campos = {
+        'clientes': ['Clie_Id', 'Clie_Nombre', 'Clie_Correo', 'Clie_Foto', 'Clie_Telefono', 'Clie_Direccion'],
+        'empleados': ['Emp_Id', 'Emp_Nombre', 'Emp_Correo', 'Emp_Foto', 'Emp_Telefono', 'Emp_Direccion'],
+        'administrador': ['Admin_Id', 'Admin_Nombre', 'Admin_Correo', 'Admin_Foto', 'NULL AS Telefono', 'NULL AS Direccion']
+    }
+
+    if rol == 'todos':
+        # Combina los resultados de las tres tablas usando UNION
+        sql = f"SELECT 'Cliente' AS Rol, {', '.join(campos['clientes'])} FROM clientes " \
+              f"UNION ALL " \
+              f"SELECT 'Empleado' AS Rol, {', '.join(campos['empleados'])} FROM empleados " \
+              f"UNION ALL " \
+              f"SELECT 'Administrador' AS Rol, {', '.join(campos['administrador'])} FROM administrador;"
+    else:
+        if rol in campos:
+            sql = f"SELECT '{rol.capitalize()}' AS Rol, {', '.join(campos[rol])} FROM {rol};"
+        else:
+            return redirect('/clientes/vista')
+    
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(sql)
     clientes = cursor.fetchall()
     conn.commit()
 
-    return render_template('/Dashboard-Admin/clientes/index.html', clientes=clientes)
+    return render_template('/Dashboard-Admin/clientes/index.html', clientes=clientes, selected_rol=rol)
+
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    clientes = cursor.fetchall()
+    conn.commit()
+
+    return render_template('/Dashboard-Admin/clientes/index.html', clientes=clientes, selected_rol=rol)
 
 @clientes_blueprint.route('/destroy/<int:Clie_Id>')
 def destroy(Clie_Id):

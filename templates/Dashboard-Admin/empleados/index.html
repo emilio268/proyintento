@@ -19,7 +19,9 @@
                 <tr>
                   <td>{{ empleado[0] }}</td>
                   <td>
+                    <div class="profile1">
                     <img src="{{ url_for('empleados.uploads', nombreFoto=empleado[3]) }}" alt="{{ empleado['Emp_Foto'] }}">
+                  </div>
                   </td>
                   <td>{{ empleado[1] }}</td>
                   <td>{{ empleado[2] }}</td>

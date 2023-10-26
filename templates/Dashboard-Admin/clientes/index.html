@@ -1,33 +1,45 @@
 {% include '/Dashboard-Admin/layout.html' %}
 <main>  
-        <h2>Lista de <span style="color: brown;"> Clientes</span></h2><br>
+        <h2>Lista de <span style="color: brown;"> Usuarios</span></h2><br>
+
+        <form method="post" action="{{ url_for('clientes.index') }}">
+            <label for="rol">Filtrar por Rol:</label>
+            <select name="rol" id="rol">
+                <option value="todos">Todos</option>
+                <option value="administrador">Administrador</option>
+                <option value="clientes">Cliente</option>
+                <option value="empleados">Empleado</option>
+            </select>
+            <input type="submit" value="Filtrar">
+        </form>
+        
   
     <table id="basic-data-table" class="table-asd" style="width:100%">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Foto</th>
+            <th>Rol</th>
             <th>Nombre</th>
             <th>Correo</th>
             <th>Telefono</th>
-            <th>Direccion</th>
-            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
             {% for cliente in clientes %}
                 <tr>
-                    <td>{{ cliente[0] }}</td>
+                    <td>{{ cliente[1] }}</td>
                     <td>
                     </td>
-                    <td>{{ cliente[1] }}</td>
+                    <td>{{ cliente[0] }}</td>
                     <td>{{ cliente[2] }}</td>
+                    <td>{{ cliente[3] }}</td>
                     <td>{{ cliente[5] }}</td>
                     <td>{{ cliente[6] }}</td>
                     <td>
-                        <a href="{{ url_for('clientes.destroy', Clie_Id=cliente[0]) }}"><span class="danger">Eliminar</span></a>
+                     
                     </td>
                 </tr>
+                
             {% endfor %}
         </tbody>
     </table>

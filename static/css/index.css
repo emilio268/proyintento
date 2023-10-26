@@ -1444,4 +1444,12 @@ main .recent-orders a{
 table {
     width: 100%;
  }
+.profile1 {
+  padding: -50%
+}
+
+ .profile1 img{
+  width: 20%;
+  border-radius: 10%;
+ }
 

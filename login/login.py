@@ -38,17 +38,13 @@ def login():
         session['Usua_Foto'] = account['Usua_Foto']
         session['logueado'] = True  # Establece la sesión como autenticada
 
-        # Incrementar el contador de inicios de sesión
-        cur.execute("UPDATE usuarios SET Usua_IniciosSesion = Usua_IniciosSesion + 1 WHERE Usua_Id = %s", (account['Usua_Id'],))
-        mysql.connection.commit()
-
-        if account['Usua_Rol'] == 1:
+        if account['Usua_Rol'] == 'administrador':
             return redirect(url_for('mostrar_dashboardadmin'))
-        elif account['Usua_Rol'] == 2:
+        elif account['Usua_Rol'] == 'empleado':
             return redirect(url_for('mostrar_dashboardemp'))
-        elif account['Usua_Rol'] == 3:
+        elif account['Usua_Rol'] == 'cliente':
             return redirect(url_for('mostrar_dashboardcli'))
-        elif account['Usua_Rol'] == 4:
+        elif account['Usua_Rol'] == 'empleado-rol':
             return redirect(url_for('mostrar_dashboardemp'))
 
     # Si la autenticación falla, mostrar un mensaje de error
@@ -74,7 +70,7 @@ def registro():
                 return redirect(url_for('login.registro'))
 
             # Insertar en la tabla usuarios
-            cur.execute("INSERT INTO usuarios (Usua_Correo, Usua_Pass, Usua_Nombre, Usua_IniciosSesion) VALUES (%s, %s, %s, 0)",
+            cur.execute("INSERT INTO usuarios (Usua_Correo, Usua_Pass, Usua_Nombre) VALUES (%s, %s, %s)",
                         (_correo, hashed_password, _nombre))
             mysql.connection.commit()
 
@@ -97,13 +93,13 @@ def registro():
             cur.execute('SELECT Usua_Rol FROM usuarios WHERE Usua_Correo = %s', (_correo,))
             account = cur.fetchone()
             if account:
-                if account['Usua_Rol'] == 1:
+                if account['Usua_Rol'] == 'administrador':
                     return render_template("/Dashboard-Admin/admin_Dashboard.html")
-                elif account['Usua_Rol'] == 2:
+                elif account['Usua_Rol'] == 'empleado':
                     return render_template("/Dashboard-Empleado/Emple-Dashboard.html")
-                elif account['Usua_Rol'] == 3:
+                elif account['Usua_Rol'] == 'cliente':
                     return render_template("/Dashboard-Cliente/clie-Dashboard.html")
-                elif account['Usua_Rol'] == 4:
+                elif account['Usua_Rol'] == 'empleado-rol':
                     return render_template("/Dashboard-Empleado/Emple-Dashboard.html")
 
         except Exception as e:
