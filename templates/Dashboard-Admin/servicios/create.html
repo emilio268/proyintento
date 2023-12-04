@@ -1,52 +1,36 @@
-{% include '/Dashboard-Admin/layout.html' %}
-        <!-- Main Content -->
-        <main>
-            
-            
-            <!-- End of Analyses -->
+{% include 'Dashboard-Admin/layout.html' %}
 
-            <!-- New Users Section -->
-            
-            <br><br>
-            <h2>Nuevo servicio</h2>
-            <h2><a href="{{ url_for('servicios.create') }}"><span class="danger">Crear servicio</span></a></h2>
-
+<!-- Main Content -->
+<main>
+    <!-- Nuevo servicio -->
+    <br><br>
+    <h2>Nuevo servicio</h2>
+    <h2><a href="{{ url_for('servicios.create') }}"><span class="danger">Crear servicio</span></a></h2>
+    <br>
+    <form action="{{ url_for('servicios.storage') }}" method="post" enctype="multipart/form-data">
+        <div class="data">
+            <h2>Nombre:</h2><br>
+            <input type="text" name="SNombre" required><br>
             <br>
+            <h2>Correo:</h2><br>
+            <input type="email" name="SCorreo" required><br><br>
+        </div>
+        <div class="picture">
+            <h2>Foto:</h2><br>
+            <input type="file" name="SFoto" accept=".jpg, .png, .jpeg" required><br><br>
+        </div>
+        <div class="empleados">
+            <h2>Empleados:</h2><br>
+            <select multiple name="empleados">
+                {% for empleado in empleados_disponibles %}
+                    <option value="{{ empleado['Emp_Id'] }}">{{ empleado['Emp_Nombre'] }} {{ empleado['Emp_Apellido'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Crear servicio</button>
+    </form>
+</main>
+<!-- Fin del contenido principal -->
 
-            <form action="{{ url_for('servicios.storage') }}" method="post" enctype="multipart/form-data">
-                <div class="data"> 
-                <h2>Nombre:</h2><br>
-                <input type="text" name="SNombre" required><br>
-            
-                <br>
-
-                <h2>Correo:</h2><br>
-                <input type="email" name="SCorreo" required><br><br>
-            
-                <h2>Foto:</h2><br>
-
-            </div>
-            <div class="picture"> 
-                <input type="file" name="SFoto" accept=".jpg, .png, .jpeg" required><br><br>
-            </div>
-                
-                <button type="submit">Crear servicio</button>
-            </form>
-            
-            <!-- End of New Users Section -->
-
-            <!-- Recent Orders Table -->
-            
-            <!-- End of Recent Orders -->
-
-        </main>
-        <!-- End of Main Content -->
-
-    </div>
-
-    <script src="../static/js/orders.js"></script>
-    <script src="../static/js/index.js"></script>
-
-
-    
-</tbody>
+<script src="../static/js/orders.js"></script>
+<script src="../static/js/index.js"></script>

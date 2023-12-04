@@ -49,13 +49,8 @@
 	--red: #FC3B56;
 }
 
-html {
-	overflow-x: hidden;
-}
-
 body {
 	background: var(--grey);
-	overflow-x: hidden;
 }
 
 a {
@@ -356,8 +351,10 @@ nav .profile .profile-link a:hover {
 
 /* MAIN */
 main {
-	width: 100%;
-	padding: 24px 20px 20px 20px;
+  width: 100%;
+  padding: 24px 20px 20px 20px;
+  overflow-y: auto; /* Agrega esta línea */
+  overflow-x: auto; /* Agrega esta línea */
 }
 main .title {
 	font-size: 28px;
@@ -1398,6 +1395,24 @@ main .recent-orders a{
 
 }
 
+.whatsapp {
+  position:fixed;
+  width:60px;
+  height:60px;
+  bottom:40px;
+  right:40px;
+  background-color:#25d366;
+  color:#FFF;
+  border-radius:50px;
+  text-align:center;
+  font-size:30px;
+  z-index:100;
+}
+
+.whatsapp-icon {
+  margin-top:13px;
+}
+
 .btn-crt {
     background: #910814; 
     width: 170px; 
@@ -1441,9 +1456,44 @@ main .recent-orders a{
     transition: all 0.35s;
 }
 
+.table-asd{
+  max-width: 100%;
+    overflow-x: auto;
+  table-layout: auto;
+
+}
+
+.table-asd::-webkit-scrollbar {
+  height: 12px;
+}
+
+.table-asd::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
 table {
-    width: 100%;
+    width: 120%;
+    table-layout: auto;
+    border-collapse: collapse;
  }
+
+th {
+  padding: 8px; /* Añade algún espacio interno para mejorar la apariencia */
+  text-align: left; /* Alinea el texto a la izquierda */
+}
+
+td, th {
+  border-right: 1px solid rgb(209, 209, 209); /* Añade un borde vertical derecho de 1 píxel a las celdas de datos */
+  border-left: 1px solid rgb(209, 209, 209); /* Añade un borde vertical derecho de 1 píxel a las celdas de datos */
+  border-bottom: 1px solid rgb(209, 209, 209); /* Añade un borde vertical derecho de 1 píxel a las celdas de datos */
+  border-top: 1px solid rgb(209, 209, 209); /* Añade un borde vertical derecho de 1 píxel a las celdas de datos */
+}
+
+ table tbody td {
+  padding: 8px;
+  line-height: 1.4; 
+}
+
 .profile1 {
   padding: -50%
 }

@@ -49,9 +49,9 @@ def index():
     }
 
     campos = {
-        'clientes': ['Clie_Id', 'Clie_Nombre', 'Clie_Correo', 'Clie_Foto', 'Clie_Telefono', 'Clie_Direccion'],
-        'empleados': ['Emp_Id', 'Emp_Nombre', 'Emp_Correo', 'Emp_Foto', 'Emp_Telefono', 'Emp_Direccion'],
-        'administrador': ['Admin_Id', 'Admin_Nombre', 'Admin_Correo', 'Admin_Foto', 'NULL AS Telefono', 'NULL AS Direccion']
+        'clientes': ['Clie_Id', 'Clie_Nombre', 'Clie_Correo', 'Clie_Foto'],
+        'empleados': ['Emp_Id', 'Emp_Nombre', 'Emp_Correo', 'Emp_Foto'],
+        'administrador': ['Admin_Id', 'Admin_Nombre', 'Admin_Correo', 'Admin_Foto']
     }
 
     if rol == 'todos':

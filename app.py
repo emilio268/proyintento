@@ -13,6 +13,10 @@ from administrador.administrador import administrador_blueprint
 from servicios.servicios import servicios_blueprint
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
+from flask import Flask, session, render_template, request, redirect, url_for
+from flaskext.mysql import MySQL
+import pymysql
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 #creamos una aplicacion
@@ -38,6 +42,62 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 db = SQLAlchemy(app)
 
+@app.route('/add', methods=['POST'])
+def add_service_to_cart():
+    cursor = None
+    conn = None  # inicializa también 'conn'
+    try:
+        _quantity = int(request.form['quantity'])
+        _code = request.form['Serv_ID']
+        # validar los valores recibidos
+        if _quantity and _code and request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute("SELECT * FROM servicios WHERE Serv_ID=%s", _code)
+            row = cursor.fetchone()
+
+            itemArray = {row['Serv_ID']: {'Serv_Nombre': row['Serv_Nombre'], 'Serv_ID': row['Serv_ID'],
+                                          'quantity': _quantity, 'Serv_Precio': row['Serv_Precio'],
+                                          'Serv_Foto': row['Serv_Foto'], 'total_price': _quantity * row['Serv_Precio']}}
+
+            all_total_price = 0
+            all_total_quantity = 0
+
+            session.modified = True
+            if 'cart_item' in session:
+                if row['Serv_ID'] in session['cart_item']:
+                    for key, value in session['cart_item'].items():
+                        if row['Serv_ID'] == key:
+                            old_quantity = session['cart_item'][key]['quantity']
+                            total_quantity = old_quantity + _quantity
+                            session['cart_item'][key]['quantity'] = total_quantity
+                            session['cart_item'][key]['total_price'] = total_quantity * row['Serv_Precio']
+                else:
+                    session['cart_item'] = array_merge(session['cart_item'], itemArray)
+
+                for key, value in session['cart_item'].items():
+                    individual_quantity = int(session['cart_item'][key]['quantity'])
+                    individual_price = float(session['cart_item'][key]['total_price'])
+                    all_total_quantity = all_total_quantity + individual_quantity
+                    all_total_price = all_total_price + individual_price
+            else:
+                session['cart_item'] = itemArray
+                all_total_quantity = all_total_quantity + _quantity
+                all_total_price = all_total_price + _quantity * row['Serv_Precio']
+
+            session['all_total_quantity'] = all_total_quantity
+            session['all_total_price'] = all_total_price
+
+            return redirect(url_for('products'))
+        else:
+            return 'Error al agregar el artículo al carrito'
+    except Exception as e:
+        print(e)
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 @app.route('/')
 def inicio():
@@ -62,6 +122,25 @@ def mostrar_dashboardservicioscreate():
 def mostrar_dashboardproycreate():
 
     return render_template('/Dashboard-Admin/proyectos/create.html')
+
+@app.route('/products')
+def mostrar_servicios1():
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT * FROM servicios")
+        rows = cursor.fetchall()
+        return render_template('products.html', services=rows)
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/products')
+def mostrar_servicios():
+
+    return render_template('/products.html')
 
 @app.route('/dashboard-admin')
 def mostrar_dashboardadmin():

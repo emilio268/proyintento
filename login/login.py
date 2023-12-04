@@ -21,7 +21,7 @@ login_blueprint = Blueprint('login', __name__)
 
 @login_blueprint.route('/acceso-login', methods=["GET", "POST"])
 def login():
-    _correo = None  # Definir _correo con un valor predeterminado
+    _correo = None
     if request.method == 'POST' and 'Usua_Correo' in request.form and 'Usua_Pass' in request.form:
         _correo = request.form['Usua_Correo']
         _password = request.form['Usua_Pass']
@@ -30,27 +30,30 @@ def login():
     cur.execute('SELECT * FROM usuarios WHERE Usua_Correo = %s', (_correo,))
     account = cur.fetchone()
 
-    if account is not None and check_password_hash(account['Usua_Pass'], _password):
-        # Si la contraseña coincide, realizar la autenticación y configurar la sesión
-        session['Usua_Correo'] = _correo
-        session['Usua_Nombre'] = account['Usua_Nombre']
-        session['Usua_Id'] = account['Usua_Id']
-        session['Usua_Foto'] = account['Usua_Foto']
-        session['logueado'] = True  # Establece la sesión como autenticada
+    if account:
+        if check_password_hash(account['Usua_Pass'], _password):
+            session['Usua_Correo'] = _correo
+            session['Usua_Nombre'] = account['Usua_Nombre']
+            session['Usua_Id'] = account['Usua_Id']
+            session['Usua_Foto'] = account['Usua_Foto']
+            session['logueado'] = True
 
-        if account['Usua_Rol'] == 'administrador':
-            return redirect(url_for('mostrar_dashboardadmin'))
-        elif account['Usua_Rol'] == 'empleado':
-            return redirect(url_for('mostrar_dashboardemp'))
-        elif account['Usua_Rol'] == 'cliente':
-            return redirect(url_for('mostrar_dashboardcli'))
-        elif account['Usua_Rol'] == 'empleado-rol':
-            return redirect(url_for('mostrar_dashboardemp'))
+        if account['Usua_Rol'] == 1:
+            return render_template("/Dashboard-Admin/admin_Dashboard.html")
+        elif account['Usua_Rol'] == 2:
+            return render_template("/Dashboard-Empleado/Emple-Dashboard.html")
+        elif account['Usua_Rol'] == 3:
+            return render_template("/Dashboard-Cliente/clie-Dashboard.html")
+        elif account['Usua_Rol'] == 4:
+            return render_template("/Dashboard-Empleado/Emple-Dashboard.html")
+        else:
+            print("Contraseña incorrecta")
+    else:
+        print("Usuario no encontrado")
 
-    # Si la autenticación falla, mostrar un mensaje de error
     flash('Usuario o Contraseña Incorrectos', 'danger')
-
     return render_template('/login/login.html')
+
 
 @login_blueprint.route('/registro', methods=['GET', 'POST'])
 def registro():

@@ -4,13 +4,20 @@
         <h2><i class='bx bx-user'></i>
             <a href="{{ url_for('empleados.create') }}"><span>Crear Empleado</span></a></h2>
     </div><br><br>
-    <table id="basic-data-table" class="table-asd" style="width:100%">
-        <thead>
+    <table id="basic-data-table" class="table-asd" >
+      <thead>
           <tr>
-            <th>ID</th>
-            <th>Foto</th>
+            <th>Documento</th>
+            <th>Tipo Doc</th>
             <th>Nombre</th>
+            <th>Apellido</th>
             <th>Correo</th>
+            <th>Sexo</th>
+            <th>Fecha Nacimiento</th>
+            <th>Telefono</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Foto</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -18,15 +25,20 @@
             {% for empleado in empleados %}
                 <tr>
                   <td>{{ empleado[0] }}</td>
-                  <td>
-                    <div class="profile1">
-                    <img src="{{ url_for('empleados.uploads', nombreFoto=empleado[3]) }}" alt="{{ empleado['Emp_Foto'] }}">
-                  </div>
-                  </td>
+                  <td>{{ empleado[3] }}</td>
                   <td>{{ empleado[1] }}</td>
                   <td>{{ empleado[2] }}</td>
-                  <td><a href="{{ url_for('empleados.edit', Emp_Id=empleado[0]) }}"><span class="danger">Editar</span></a></td>
-                  <td><a href="{{ url_for('empleados.destroy', Emp_Id=empleado[0]) }}"><span class="danger">Eliminar</span></a></td>
+                  <td>{{ empleado[4] }}</td>
+                  <td>{{ empleado[5] }}</td>
+                  <td>{{ empleado[6] }}</td>
+                  <td>{{ empleado[7] }}</td>
+                  <td>{{ empleado[8] }}</td>
+                  <td>{{ empleado[9] }}</td>
+                 <td> <div class="profile1">
+                    <img src="{{ url_for('empleados.uploads', nombreFoto=empleado[10]) }}" alt="{{ empleado['Emp_Foto'] }}">
+                  </div></td>
+                  <td><a href="{{ url_for('empleados.edit', Emp_Id=empleado[0]) }}"><span class="danger">Editar</span></a><br>
+                    <a href="{{ url_for('empleados.destroy', Emp_Id=empleado[0]) }}"><span class="danger">Eliminar</span></a></td>
                 </tr>
             {% endfor %}
         </tbody>

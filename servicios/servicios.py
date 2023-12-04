@@ -48,7 +48,19 @@ def index():
     servicios = cursor.fetchall()
     conn.commit()
 
+    # Obtener empleados para cada servicio
+    for servicio in servicios:
+        cursor.execute("SELECT * FROM asignacion_empleados WHERE Serv_ID=%s", servicio[0])
+        empleados = cursor.fetchall()
+
+        # Ahora 'empleados' es una lista de tuplas, y puedes realizar operaciones en ella si es necesario
+        for empleado in empleados:
+            # Realiza las operaciones necesarias con cada empleado
+            pass
+
     return render_template('Dashboard-Admin/servicios/index.html', servicios=servicios)
+
+
 
 @servicios_blueprint.route('/destroy/<int:Serv_ID>')
 def destroy(Serv_ID):
@@ -107,7 +119,15 @@ def update():
 
 @servicios_blueprint.route('/create')
 def create():
-    return render_template('Dashboard-Admin/servicios/create.html')
+    # Obtener la lista de empleados disponibles
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM empleados WHERE Emp_Estado = 'Disponible';")
+    empleados_disponibles = cursor.fetchall()
+    conn.commit()
+
+    return render_template('Dashboard-Admin/servicios/create.html', empleados_disponibles=empleados_disponibles)
+
 
 @servicios_blueprint.route('/store', methods=['POST'])
 def storage():
@@ -130,6 +150,16 @@ def storage():
     cursor = conn.cursor()
     cursor.execute(sql, datos)
     conn.commit()
+
+    # Obtener empleados para el nuevo servicio
+    cursor.execute("SELECT * FROM asignacion_empleados WHERE Serv_ID=%s", cursor.lastrowid)
+    empleados_nuevo_servicio = cursor.fetchall()
+
+    # Ahora 'empleados_nuevo_servicio' es una lista de tuplas, y puedes realizar operaciones en ella si es necesario
+    for empleado in empleados_nuevo_servicio:
+        # Realiza las operaciones necesarias con cada empleado del nuevo servicio
+        pass
+
     return redirect('/servicios/vista')
 
 @app.route('/inicio')

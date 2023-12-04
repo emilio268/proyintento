@@ -1,178 +1,142 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 28-08-2023 a las 05:31:58
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Creación de la base de datos sistema (si no existe)
+drop database if exists sistema;
+CREATE DATABASE IF NOT EXISTS sistema;
+USE sistema;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `sistema`
-
-drop database sistema;
-create database sistema;
-use sistema;
---
-
-
---
 -- Estructura de tabla para la tabla `empleados`
---
-
 CREATE TABLE `empleados` (
-  `Emp_Id` int(10) NOT NULL,
+  `Emp_Id` varchar(15) NOT NULL,
   `Emp_Nombre` varchar(255) NOT NULL,
+  `Emp_Apellido` varchar(255) NOT NULL,
+  `Emp_TipoDoc` varchar(5) NOT NULL,
   `Emp_Correo` varchar(255) NOT NULL,
-  `Emp_Foto` varchar(5000) NOT NULL
+  `Emp_Sexo` varchar(255) NOT NULL,
+  `Emp_FechaNac` date NOT NULL,
+  `Emp_Telefono` varchar(255) DEFAULT NULL,
+  `Emp_Direccion` varchar(255) DEFAULT NULL,
+  `Emp_Estado` varchar(100) DEFAULT TRUE,
+  `Emp_Foto` varchar(5000) DEFAULT NULL,
+  PRIMARY KEY (`Emp_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `empleados`
---
-INSERT INTO `empleados` (`Emp_Id`, `Emp_Nombre`, `Emp_Correo`, `Emp_Foto`) VALUES
-(1, 'sda', 'dsaqq@gmail.co', '2023031329WhatsApp Image 2023-08-27 at 4.42.51 AM.jpeg');
-
-
--- --------------------------------------------------------
+-- Estructura de tabla para la tabla `usuarios`
 CREATE TABLE `usuarios` (
   `Usua_Id` int(10) NOT NULL AUTO_INCREMENT,
   `Usua_Rol` int NOT NULL DEFAULT 3,
   `Usua_Correo` varchar(255) NOT NULL,
   `Usua_Nombre` varchar(255) NOT NULL,
   `Usua_Pass` varchar(255) NOT NULL,
-  `Usua_Foto` varchar(5000)DEFAULT null ,
-  PRIMARY KEY (`Usua_Id`)
-);
+  `Usua_Foto` varchar(5000) DEFAULT NULL,
+  `Usua_PrimerRegistro` BOOLEAN DEFAULT TRUE,
+  `Usua_IniciosSesion` int DEFAULT 0,
+  `Emp_Id` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`Usua_Id`),
+  FOREIGN KEY (`Emp_Id`) REFERENCES `empleados`(`Emp_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `usuarios` (`Usua_Rol`, `Usua_Correo`, `Usua_Nombre`, `Usua_Pass`, `Usua_Foto`) VALUES
-(1, 'Admin@gmail.com', 'Jorge', '$2b$12$aUUZKCbQheWos4KdioPYPudq7c9S2PbqIJgWGggfokcNb0up.jg9m', null),
-(2, 'Empleado@gmail.com', 'Juan', '$2b$12$aUUZKCbQheWos4KdioPYPudq7c9S2PbqIJgWGggfokcNb0up.jg9m', null),
-(3, 'Cliente@gmail.com', 'Jaime', '$2b$12$aUUZKCbQheWos4KdioPYPudq7c9S2PbqIJgWGggfokcNb0up.jg9m', null),
-(4, 'EmpleadoRol@gmail.com', 'Daniel', '$2b$12$aUUZKCbQheWos4KdioPYPudq7c9S2PbqIJgWGggfokcNb0up.jg9m', null);
-
--- Estructura de tabla para la tabla `administrador`
---
-
+-- Estructura de tabla para la tabla `clientes`
 CREATE TABLE `clientes` (
-  `Clie_Id` int(10) not null,
+  `Clie_Id` int(10) NOT NULL AUTO_INCREMENT,
   `Clie_Nombre` varchar(255) NOT NULL,
   `Clie_Correo` varchar(255) NOT NULL,
-  `Clie_Foto` varchar(255) DEFAULT null,
+  `Clie_Foto` varchar(255) DEFAULT NULL,
   `Usua_Id` int(10) NOT NULL,
-  foreign key (Usua_Id) references usuarios(Usua_Id)
+  `Clie_Telefono` varchar(255) DEFAULT NULL,
+  `Clie_Direccion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Clie_Id`),
+  FOREIGN KEY (`Usua_Id`) REFERENCES `usuarios`(`Usua_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
-insert into clientes values(1,"Daniel","Daniel@gmail.com",null,1);
-insert into clientes values(2,"jorge","Jorge@gmail.com",null,2);
-insert into clientes values(3,"Mauricio","Mauricio@gmail.com",null,3);
-insert into clientes values(4,"Miguel","Miguel@gmail.com",null,4);
-
+-- Estructura de tabla para la tabla `administrador`
 CREATE TABLE `administrador` (
-  `Admin_Id` int(10) NOT NULL,
+  `Admin_Id` int(10) NOT NULL AUTO_INCREMENT,
   `Admin_Correo` varchar(255) NOT NULL,
   `Admin_Nombre` varchar(255) NOT NULL,
-  `Admin_Foto` varchar(5000) NOT NULL
+  `Admin_Foto` varchar(5000) NOT NULL,
+  PRIMARY KEY (`Admin_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-select * from usuarios;
-select * from clientes;
---
--- Volcado de datos para la tabla `empleados`
---
 
-INSERT INTO `administrador` (`Admin_Id`, `Admin_Correo`, `Admin_Nombre`,`Admin_Foto`) VALUES
-(1, 'asd@gmail.com', 'Juan','2023040912istockphoto-1049750874-612x612.jpg');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `proyectos`
---
-
 CREATE TABLE `proyectos` (
-  `Proy_ID` int(10) NOT NULL,
+  `Proy_ID` int(10) NOT NULL AUTO_INCREMENT,
   `Proy_Nombre` varchar(255) NOT NULL,
   `Proy_Desc` varchar(255) NOT NULL,
-  `Proy_Foto` varchar(5000)
+  `Proy_Foto` varchar(5000),
+  `Proy_FechaInicio` date DEFAULT NULL,
+  `Proy_FechaFin` date DEFAULT NULL,
+  `Proy_Estado` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Proy_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-insert into proyectos values (1,"Puerta","Arreglar Puerta","");
-
+-- Estructura de tabla para la tabla `servicios`
 CREATE TABLE `servicios` (
-  `Serv_ID` int(10) NOT NULL primary key auto_increment,
+  `Serv_ID` int(10) NOT NULL AUTO_INCREMENT,
   `Serv_Nombre` varchar(255) NOT NULL,
   `Serv_Desc` varchar(255) NOT NULL,
-  `Serv_Foto` varchar(5000)
+  `Serv_Categ` varchar(255) NOT NULL,
+  `Serv_Foto` varchar(5000),
+  `Serv_Precio` int(11) DEFAULT NULL,
+  `Serv_FechaInicio` datetime DEFAULT NULL,
+  `Serv_FechaFin` datetime DEFAULT NULL,
+  `Serv_Estado` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`Serv_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-insert into servicios values (1,"Puerta","Arreglar Puerta","");
+CREATE TABLE `asignacion_empleados` (
+  `Asignacion_ID` int(10) NOT NULL AUTO_INCREMENT,
+  `Serv_ID` int(10) NOT NULL,
+  `Emp_Id` varchar(15) NOT NULL,
+  PRIMARY KEY (`Asignacion_ID`),
+  FOREIGN KEY (`Serv_ID`) REFERENCES `servicios`(`Serv_ID`),
+  FOREIGN KEY (`Emp_Id`) REFERENCES `empleados`(`Emp_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Índices para tablas volcadas
---
+-- Inserciones originales en la tabla `usuarios`
+INSERT INTO `usuarios` (`Usua_Rol`, `Usua_Correo`, `Usua_Nombre`, `Usua_Pass`, `Usua_Foto`, `Usua_PrimerRegistro`, `Usua_IniciosSesion`) VALUES
+(1, 'Admin@gmail.com', 'Jorge', '$2b$12$aUUZKCbQheWos4KdioPYPudq7c9S2PbqIJgWGggfokcNb0up.jg9m', NULL, FALSE, 0),
+(2, 'Empleado@gmail.com', 'Juan', '$2b$12$aUUZKCbQheWos4KdioPYPudq7c9S2PbqIJgWGggfokcNb0up.jg9m', NULL, FALSE, 0),
+(3, 'Cliente@gmail.com', 'Jaime', '$2b$12$aUUZKCbQheWos4KdioPYPudq7c9S2PbqIJgWGggfokcNb0up.jg9m', NULL, FALSE, 0),
+(4, 'EmpleadoRol@gmail.com', 'Daniel', '$2b$12$aUUZKCbQheWos4KdioPYPudq7c9S2PbqIJgWGggfokcNb0up.jg9m', NULL, FALSE, 0);
 
---
--- Indices de la tabla `clientes`
---
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`Clie_Id`);
+-- Inserciones originales en la tabla `empleados`
+INSERT INTO `empleados` VALUES
+(1021671404, 'Andres', 'Huertas', 'CC','Andres@gmail.com','Hombre','2023-11-30','3208216388','Cra 1a','Activo','2023040912istockphoto-1049750874-612x612.jpg');
 
--- Indices de la tabla `clientes`
---
-ALTER TABLE `administrador`
-  ADD PRIMARY KEY (`Admin_Id`);
+-- Inserciones originales en la tabla `clientes`
+INSERT INTO `clientes` (`Clie_Id`, `Clie_Nombre`, `Clie_Correo`, `Clie_Foto`, `Usua_Id`,`Clie_Telefono`,`Clie_Direccion`) VALUES
+(1, 'Daniel', 'Daniel@gmail.com', NULL, 1,"3208216388","cra 1a"),
+(2, 'jorge', 'Jorge@gmail.com', NULL, 2,"3208216388","cra 1a"),
+(3, 'Mauricio', 'Mauricio@gmail.com', NULL, 3,"3208216388","cra 1a"),
+(4, 'Miguel', 'Miguel@gmail.com', NULL, 4,"3208216388","cra 1a"),
+(5, 'Cliente 2', 'cliente2@example.com', 'foto_cliente2.jpg', 3,"3208216388","cra 1a"),
+(6, 'Cliente 3', 'cliente3@example.com', 'foto_cliente3.jpg', 4,"3208216388","cra 1a"),
+(7, 'Cliente 4', 'cliente4@example.com', 'foto_cliente4.jpg', 1,"3208216388","cra 1a"),
+(8, 'Cliente 5', 'cliente5@example.com', 'foto_cliente5.jpg', 2,"3208216388","cra 1a");
 
+-- Inserciones originales en la tabla `administrador`
+INSERT INTO `administrador` (`Admin_Id`, `Admin_Correo`, `Admin_Nombre`, `Admin_Foto`) VALUES
+(1, 'asd@gmail.com', 'Juan', '2023040912istockphoto-1049750874-612x612.jpg'),
+(2, 'admin2@example.com', 'Administrador 2', 'foto_admin2.jpg'),
+(3, 'admin3@example.com', 'Administrador 3', 'foto_admin3.jpg'),
+(4, 'admin4@example.com', 'Administrador 4', 'foto_admin4.jpg'),
+(5, 'admin5@example.com', 'Administrador 5', 'foto_admin5.jpg');
 
---
--- Indices de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  ADD PRIMARY KEY (`Emp_Id`);
+-- Inserciones originales en la tabla `proyectos`
+INSERT INTO `proyectos` (`Proy_ID`, `Proy_Nombre`, `Proy_Desc`, `Proy_Foto`) VALUES
+(1, 'Puerta', 'Arreglar Puerta', ''),
+(2, 'Proyecto 2', 'Descripción Proyecto 2', 'foto_proyecto2.jpg'),
+(3, 'Proyecto 3', 'Descripción Proyecto 3', 'foto_proyecto3.jpg'),
+(4, 'Proyecto 4', 'Descripción Proyecto 4', 'foto_proyecto4.jpg'),
+(5, 'Proyecto 5', 'Descripción Proyecto 5', 'foto_proyecto5.jpg');
 
---
--- Indices de la tabla `proyectos`
---
-ALTER TABLE `proyectos`
-  ADD PRIMARY KEY (`Proy_ID`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `Clie_Id` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  MODIFY `Emp_Id` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `proyectos`
---
-ALTER TABLE `proyectos`
-  MODIFY `Proy_ID` int(10) NOT NULL AUTO_INCREMENT;
-COMMIT;
+-- Inserciones originales en la tabla `servicios`
+INSERT INTO `servicios` VALUES
+(2, 'Servicio 2', 'Descripción Servicio 2','Pintar', 'foto_servicio2.jpg',3000,'2023-12-03','2023-12-05','Disponible'),
+(3, 'Servicio 3', 'Descripción Servicio 3','Pintar', 'foto_servicio3.jpg',3000,'2023-12-03','2023-12-05','Disponible'),
+(4, 'Servicio 4', 'Descripción Servicio 4','Pintar', 'foto_servicio4.jpg',3000,'2023-12-03','2023-12-05','Disponible'),
+(5, 'Servicio 5', 'Descripción Servicio 5','Pintar', 'foto_servicio5.jpg',3000,'2023-12-03','2023-12-05','Disponible');
 
 select * from usuarios;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
 
